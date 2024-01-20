@@ -1,0 +1,75 @@
+---
+title: "gg-plotly-example"
+output: html_document
+date: "2024-01-20"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Make Your Graphs Interactive with ggplot2 & plotly
+For more information, [see the original guide this example is based on](https://rpubs.com/McGarveyA/ggplot2-plotly)
+
+## Including Plots
+```{r}
+# Load Packages
+library(ggplot2)
+library(tidyverse)
+library(plotly)
+head(iris)
+```
+You can also embed plots, for example:
+
+## Call ggplotly()
+```{r iris}
+sp <- ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point(size = 3, aes(text = paste0("Species: ", Species,
+                                         "<br>",
+                                         "Sepal Width: ", Sepal.Width,
+                                         "<br>",
+                                         "Petal Width: ", Petal.Width,
+                                         "<br>",
+                                         "Sepal Length: ", Sepal.Length,
+                                         "<br>",
+                                         "Petal Length: ", Petal.Length)))
+
+
+ggplotly(sp, tooltip = "text") %>% 
+  layout(hoverlabel=list(bgcolor = "#ffffff"))
+```
+
+```{r txhousing}
+# Assign filtered data frame to df
+df <- txhousing %>% 
+  filter(city == "Abilene" & year == 2000)
+
+# Format month numbers as the month name
+df$month <- month(df$month, abbr = FALSE, label = TRUE)
+
+# Create barplot
+bp <- df %>% 
+  ggplot(aes(x = month, y = sales)) +
+  geom_col(stat = "identity",
+           fill = "#1f5673",
+           aes(text = paste0(
+    "<b>", month, " Summary", "</b>",
+    "<br>",
+    "<b>Sales: </b>", sales,
+    "<br>",
+    "<b>Median Sale Price: </b>$", median,
+    "<br>",
+    "<b>Percentage of Listings Sold: </b>", round(sales/listings*100, 2), "%"
+  ))) +
+  labs(title = "Monthly House Sales for Abilene in the Year 2000",
+       x = "Month",
+       y = "Total House Sales") +
+    geom_text(aes(label = sales,
+                  y = sales + 3,
+                  text = paste0(sales, " Monthly Sales")))
+
+# Wrap with ggplotly()
+ggplotly(bp, tooltip = "text")%>% 
+  layout(hoverlabel=list(bgcolor = "#ffffff"))
+```
+That’s it! Animating your ggplot2 graphs with plotly isn’t overly complex and doesn’t require you to learn an entire package. There are some nuances as you’ll noticed with how I positioned the geom_text() in the house sales graph. I typically wrap the majority of my ggplot2 graphs in ggplotly() since improve the user experience. Not only can they glance at the graph to get basic information, but simply hovering over a data point their interested in will provide them with additional information, without navigating away from the graph.
