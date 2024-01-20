@@ -3,10 +3,9 @@
 import Head from 'next/head';
 import * as React from 'react';
 
-import ArrowLink from '@/components/links/ArrowLink';
-import ButtonLink from '@/components/links/ButtonLink';
-import UnderlineLink from '@/components/links/UnderlineLink';
+import { ContentCard } from '@/components/ContentCard';
 import UnstyledLink from '@/components/links/UnstyledLink';
+import NextImage from '@/components/NextImage';
 
 /**
  * SVGR Support
@@ -15,7 +14,6 @@ import UnstyledLink from '@/components/links/UnstyledLink';
  * You can override the next-env if the type is important to you
  * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
  */
-import Logo from '~/svg/Logo.svg';
 
 // !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
 // Before you begin editing, follow all comments with `STARTERCONF`,
@@ -25,47 +23,111 @@ export default function HomePage() {
   return (
     <main>
       <Head>
-        <title>Hi</title>
+        <title>My Portfolio</title>
       </Head>
       <section className='bg-white'>
-        <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
-          <Logo className='w-16' />
-          <h1 className='mt-4'>Next.js + Tailwind CSS + TypeScript Starter</h1>
-          <p className='mt-2 text-sm text-gray-800'>
-            A starter for Next.js, Tailwind CSS, and TypeScript with Absolute
-            Import, Seo, Link component, pre-configured with Husky{' '}
-          </p>
-          <p className='mt-2 text-sm text-gray-700'>
-            <ArrowLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>
-              See the repository
-            </ArrowLink>
-          </p>
+        <div className='relative flex min-h-screen flex-col '>
+          <div className='layout-mw layout flex-1 lg:pt-12  pt-8 pb-4  text-xl'>
+            <hgroup>
+              <h1 className='font-bold'>Rachel Dimiskovska</h1>
+              <h2>Data Analyst currently in Toronto, Ontario</h2>
+            </hgroup>
+            <br />
+            <address className='not-italic'>
+              <UnstyledLink href='mailto:ryeodocu@gmail.com'>
+                ryeodocu@gmail.com
+              </UnstyledLink>
+              <br />
+              <UnstyledLink href='https://rhaebin.medium.com/' target='_blank'>
+                @Rhaebin
+              </UnstyledLink>
+            </address>
+            <section className='mt-8 grid gap-4 md:grid-cols-2 grid-cols-1'>
+              {contentCards.map((c, idx) => (
+                <UnstyledLink
+                  key={`content-card--${idx}`}
+                  href={c.link}
+                  className='rounded-sm border border-black/20 p-4 max-w-2xl'
+                >
+                  <ContentCard
+                    title={c.title}
+                    subtitle={c.subtitle}
+                    description={c.description}
+                    image={c.image}
+                  />
+                </UnstyledLink>
+              ))}
+            </section>
+          </div>
 
-          <ButtonLink className='mt-6' href='/components' variant='light'>
-            See all components
-          </ButtonLink>
-
-          <UnstyledLink
-            href='https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter'
-            className='mt-4'
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              width='92'
-              height='32'
-              src='https://vercel.com/button'
-              alt='Deploy with Vercel'
-            />
-          </UnstyledLink>
-
-          <footer className='absolute bottom-2 text-gray-700'>
-            © {new Date().getFullYear()} By{' '}
-            <UnderlineLink href='https://theodorusclarence.com?ref=tsnextstarter'>
-              Theodorus Clarence
-            </UnderlineLink>
+          <footer className='text-right layout py-4'>
+            <div className='inline-flex items-center gap-3'>
+              <UnstyledLink
+                href='https://rhaebin.medium.com/'
+                target='_blank'
+                className='flex items-center'
+              >
+                <NextImage
+                  useSkeleton={true}
+                  alt='Medium icon'
+                  src='/images/medium-logo.png'
+                  width={41}
+                  height={41}
+                />
+              </UnstyledLink>
+              <UnstyledLink
+                href='https://github.com/orgs/no-maintenance/people/rachelyeo'
+                target='_blank'
+                className='flex items-center'
+              >
+                <NextImage
+                  useSkeleton={true}
+                  alt='github icon'
+                  src='/images/github-logo.png'
+                  width={41}
+                  height={41}
+                />
+              </UnstyledLink>
+            </div>
           </footer>
         </div>
       </section>
     </main>
   );
 }
+
+const contentCards = [
+  {
+    title: 'Interactive ggPlotly Example',
+    description:
+      'Originally commissioned by Telefónica and Mozilla Corporation as part of the joint effort during the development of Firefox OS.',
+    subtitle: 'Designed by Erik Speikermann',
+    image: {
+      alt: 'thumbnail alt',
+      src: '/images/thumbnail-1.png',
+    },
+    link: '/r/ggplot-example.html',
+  },
+  {
+    title: 'Interactive ggPlotly Example',
+    description:
+      'Originally commissioned by Telefónica and Mozilla Corporation as part of the joint effort during the development of Firefox OS.',
+    subtitle: 'Designed by Erik Speikermann',
+    image: {
+      alt: 'thumbnail alt',
+      src: '/images/thumbnail-1.png',
+    },
+    link: '/r/ggplot-example.html',
+  },
+  {
+    title: 'Example 2 ggPlotly',
+    description:
+      'Originally commissioned by Telefónica and Mozilla Corporation as part of the joint effort during the development of Firefox OS.',
+    subtitle: 'Designed by Erik Speikermann',
+    image: {
+      alt: 'thumbnail alt',
+      src: '/images/thumbnail-1.png',
+    },
+    link: '/r/ggplot-example.html',
+  },
+];

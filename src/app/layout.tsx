@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Fira_Code } from 'next/font/google';
 import * as React from 'react';
 
 import '@/styles/globals.css';
@@ -49,13 +50,19 @@ export const metadata: Metadata = {
   // ],
 };
 
+const firaCode = Fira_Code({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-fira-code',
+});
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html>
+    <html lang='en' className={`${firaCode.variable}`}>
       <body>{children}</body>
     </html>
   );

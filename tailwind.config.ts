@@ -6,7 +6,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        primary: ['Inter', ...defaultTheme.fontFamily.sans],
+        primary: ['var(--font-fira-code)', ...defaultTheme.fontFamily.sans],
+      },
+      fontSize: {
+        sm: ['14px', '20px'],
+        xl: ['1.3rem', '25px'],
       },
       colors: {
         primary: {
